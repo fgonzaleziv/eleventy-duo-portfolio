@@ -1,5 +1,5 @@
 {
-  "name": "Eleventy Duo",
+  "name": "Francisco Gonzalez IV",
   "description": "Eleventy Duo is a minimal and beautiful Eleventy theme for personal blogs.",
   "url": "https://eleventyduo.netlify.app",
   "author": {
@@ -44,5 +44,5 @@
       "external": true
     }
   ],
-  "showFooterAttribution": true
+  "showFooterAttribution": false
 }
