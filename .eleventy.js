@@ -1,15 +1,15 @@
-import { DateTime } from 'luxon';
-import readingTime from 'eleventy-plugin-reading-time';
-import pluginRss from '@11ty/eleventy-plugin-rss';
-import syntaxHighlight from '@11ty/eleventy-plugin-syntaxhighlight';
-import { minify } from 'html-minifier';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
+const { DateTime } = require('luxon');
+const readingTime = require('eleventy-plugin-reading-time');
+const pluginRss = require('@11ty/eleventy-plugin-rss');
+const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
+const htmlmin = require('html-minifier')
+const fs = require('fs');
+const path = require('path');
 
 const isDev = process.env.ELEVENTY_ENV === 'development';
 const isProd = process.env.ELEVENTY_ENV === 'production'
 
-const manifestPath = resolve(
+const manifestPath = path.resolve(
   __dirname,
   'public',
   'assets',
@@ -21,9 +21,9 @@ const manifest = isDev
       'main.js': '/assets/main.js',
       'main.css': '/assets/main.css',
     }
-  : JSON.parse(readFileSync(manifestPath, { encoding: 'utf8' }));
+  : JSON.parse(fs.readFileSync(manifestPath, { encoding: 'utf8' }));
 
-export default function (eleventyConfig) {
+module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(readingTime);
   eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
@@ -120,7 +120,7 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addTransform('htmlmin', function(content, outputPath) {
     if ( outputPath && outputPath.endsWith(".html") && isProd) {
-      return minify(content, {
+      return htmlmin.minify(content, {
         removeComments: true,
         collapseWhitespace: true,
         useShortDoctype: true,
@@ -136,11 +136,11 @@ export default function (eleventyConfig) {
       output: 'public',
       includes: 'includes',
       data: 'data',
-      layouts: 'layouts'
+      layouts: 'layouts',
+      passthroughFileCopy: true,
+      templateFormats: ['html', 'njk', 'md'],
+      htmlTemplateEngine: 'njk',
+      markdownTemplateEngine: 'njk',
     },
-    passthroughFileCopy: true,
-    templateFormats: ['html', 'njk', 'md'],
-    htmlTemplateEngine: 'njk',
-    markdownTemplateEngine: 'njk',
   };
 };
