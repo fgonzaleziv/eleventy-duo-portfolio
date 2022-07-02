@@ -1,15 +1,15 @@
-const { DateTime } = require('luxon');
-const readingTime = require('eleventy-plugin-reading-time');
-const pluginRss = require('@11ty/eleventy-plugin-rss');
-const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
-const htmlmin = require('html-minifier')
-const fs = require('fs');
-const path = require('path');
+import { DateTime } from 'luxon';
+import readingTime from 'eleventy-plugin-reading-time';
+import pluginRss from '@11ty/eleventy-plugin-rss';
+import syntaxHighlight from '@11ty/eleventy-plugin-syntaxhighlight';
+import { minify } from 'html-minifier';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
 
 const isDev = process.env.ELEVENTY_ENV === 'development';
 const isProd = process.env.ELEVENTY_ENV === 'production'
 
-const manifestPath = path.resolve(
+const manifestPath = resolve(
   __dirname,
   'public',
   'assets',
@@ -21,9 +21,9 @@ const manifest = isDev
       'main.js': '/assets/main.js',
       'main.css': '/assets/main.css',
     }
-  : JSON.parse(fs.readFileSync(manifestPath, { encoding: 'utf8' }));
+  : JSON.parse(readFileSync(manifestPath, { encoding: 'utf8' }));
 
-module.exports = function (eleventyConfig) {
+export default function (eleventyConfig) {
   eleventyConfig.addPlugin(readingTime);
   eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
@@ -120,7 +120,7 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addTransform('htmlmin', function(content, outputPath) {
     if ( outputPath && outputPath.endsWith(".html") && isProd) {
-      return htmlmin.minify(content, {
+      return minify(content, {
         removeComments: true,
         collapseWhitespace: true,
         useShortDoctype: true,
