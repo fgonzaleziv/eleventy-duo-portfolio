@@ -1,4 +1,4 @@
-@import 'global.css';
+/* @import 'global.css';
 @import 'variable.css';
 @import 'prism-theme.css';
 @import 'typography.css';
@@ -7,7 +7,8 @@
 @import 'header.css';
 @import 'footer.css';
 @import 'post.css';
-@import 'about.css';
+@import 'about.css'; */
+@import "../../node_modules/bootstrap/scss/bootstrap";
 
 .layout-wrapper {
   display: grid;
