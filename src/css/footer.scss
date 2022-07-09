@@ -4,6 +4,13 @@
   padding-right: 1rem;
   max-width: none;
   width: 100%;
+  li {
+    margin-right: 2rem;
+  }
+  ul {
+    list-style: none;
+    display: flex;
+  }
 }
 
 .footer__content {
@@ -24,13 +31,4 @@
 
 .footer__attribution {
   font-size: var(--text-sm);
-}
-
-.footer ul {
-  list-style: none;
-  display: flex;
-}
-
-.footer li {
-  margin-right: 2rem;
 }

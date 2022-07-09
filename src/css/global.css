@@ -14,7 +14,6 @@ body::-webkit-scrollbar {
 
 body {
   scrollbar-width: thin;
-  scrollbar-color: color-mod(var(--color) alpha(90%)) var(--background);
   height: 100%;
 }
 
@@ -22,9 +21,7 @@ body::-webkit-scrollbar-track {
   background: var(--background);
 }
 
-body::-webkit-scrollbar-thumb {
-  background-color: color-mod(var(--color) alpha(90%));
-}
+
 
 *,
 *:before,
@@ -61,7 +58,7 @@ img {
 hr {
   width: 100%;
   border: none;
-  background: color-mod(var(--color) a(10%));
+
   height: 1px;
   margin-top: 2rem;
 }
@@ -101,7 +98,7 @@ table {
   caption-side: bottom;
   overflow-x: auto;
   min-width: 100%;
-  border: 1px solid color-mod(var(--color) alpha(30%));
+
   margin-top: 1rem;
 }
 
@@ -111,7 +108,7 @@ table caption {
 
 td,
 th {
-  border: 1px solid color-mod(var(--color) alpha(30%));
+
   padding: 0.5rem;
   text-align: left;
 }
@@ -166,7 +163,7 @@ pre {
   white-space: pre-wrap;
   tab-size: 2;
   font-size: 0.95rem;
-  border: 1px solid color-mod(var(--color) a(10%));
+
   padding: 1rem;
   margin-top: 1rem;
 }
@@ -175,7 +172,7 @@ code,
 kbd {
   color: var(--accent);
   font-feature-settings: normal;
-  background: color-mod(var(--accent) a(20%));
+
   color: var(--accent);
   padding: 1px 6px;
   margin: 0 2px;
@@ -188,7 +185,7 @@ pre {
   margin-left: auto;
   margin-right: auto;
   scrollbar-width: thin;
-  scrollbar-color: color-mod(var(--color) alpha(80%));
+
 }
 
 pre::-webkit-scrollbar {
@@ -198,10 +195,6 @@ pre::-webkit-scrollbar {
 
 pre::-webkit-scrollbar-track {
   background: var(--background);
-}
-
-pre::-webkit-scrollbar-thumb {
-  background-color: color-mod(var(--color) alpha(80%));
 }
 
 pre,

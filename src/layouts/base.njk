@@ -49,47 +49,39 @@
       <meta name="twitter:image" content="{{ socialImage | url | absoluteUrl(site.url) }}"/>
     {% endif %}
 
-    {# Add mermaid -- start #}
-      <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-      <script>mermaid.initialize({startOnLoad:true});</script>
-    {# Add mermaid -- end #}
   </head>
   <body>
-    <div class="layout-wrapper">
-
-      <header class="header">
-        <div class="header__content">
-          <h1 class="site-title">
-            <a href={{ "/" | url }}>
+    <div class="container">
+      <header class="p-3 mb-3 border-bottom">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <h1 class="fs-4">
+            <a href={{ "/" | url }} class="text-decoration-none text-dark">
               {{site.name}}
             </a>
           </h1>
 
           {% if site.headerLinks %}
-            <nav class="nav">
-              <ul class="nav__list">
+              <ul class="nav col-12 col-lg-auto ms-lg-auto mb-2 justify-content-end mb-md-0">
                 {% for item in site.headerLinks %}
                   {% set currentAttribute = '' %}
                   {% set externalAttribute = '' %}
+                  {% set currentClassAttribute = '' %}
 
                   {% if item.external %}
                     {% set externalAttribute = 'target="_blank" rel="noopener noreferrer"' %}
                   {% endif %}
 
-                  {% if page.url == item.url %}
+                  {% if page.url == (item.url+'/') %}
                     {% set currentAttribute = 'aria-current="page"' %}
+                    {% set currentClassAttribute = 'active' %}
                   {% endif %}
-
-                  <li class="nav-item">
-                    <a href="{{ item.url | url }}" {{ currentAttribute | safe }} {{ externalAttribute | safe }}>{{ item.text }}</a>
+                  <li class="">
+                    <a href="{{ item.url | url }}" {{ currentAttribute | safe }} {{ externalAttribute | safe }} class="nav-link px-2 link-dark {{ currentClassAttribute | safe }}">{{ item.text }}</a>
                   </li>
                 {% endfor %}
               </ul>
-            </nav>
-
-          {% endif %}
-
         </div>
+          {% endif %}
       </header>
 
       <main class="main">
@@ -132,10 +124,7 @@
 
           {% if site.showFooterAttribution %}
             <p class="footer__attribution">
-          Created by
-      <a href="https://twitter.com/yinkakun" target="_blank" rel="noopener">Yinka,</a>
        Powered by <a href="https://www.11ty.dev" target="_blank" rel="noopener">11ty,</a>
-        Checkout <a href="https://github.com/yinkakun/eleventy-duo" target="_blank" rel="noopener noreferrer">project's github repo </a>
             </p>
           {% endif %}
 

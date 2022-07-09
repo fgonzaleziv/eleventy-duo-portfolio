@@ -27,23 +27,13 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(readingTime);
   eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
-
-  // setup mermaid markdown highlighter
-  const highlighter = eleventyConfig.markdownHighlighter;
-  eleventyConfig.addMarkdownHighlighter((str, language) => {
-    if (language === 'mermaid') {
-      return `<pre class="mermaid">${str}</pre>`;
-    }
-    return highlighter(str, language);
-  });
-
   eleventyConfig.setDataDeepMerge(true);
   eleventyConfig.addPassthroughCopy({ 'src/images': 'images' });
   eleventyConfig.setBrowserSyncConfig({ files: [manifestPath] });
 
   eleventyConfig.addShortcode('bundledcss', function () {
-    return manifest['main.css']
-      ? `<link href="${manifest['main.css']}" rel="stylesheet" />`
+    return manifest['main.scss']
+      ? `<link href="${manifest['main.scss']}" rel="stylesheet" />`
       : '';
   });
 
@@ -117,6 +107,9 @@ module.exports = function (eleventyConfig) {
         return !generalTags.includes(tag);
       });
   });
+  eleventyConfig.addFilter('log', value => {
+    console.log(value)
+})
 
   eleventyConfig.addTransform('htmlmin', function(content, outputPath) {
     if ( outputPath && outputPath.endsWith(".html") && isProd) {
