@@ -16,6 +16,14 @@ layout: base.njk
 
   <main class="post__content">
     {{ content | safe }}
+
+       {% if screen %}
+           <div class="row">
+            <img src="{{ '../../'+screen }}" class="img-fluid col-10 mx-auto">
+                </div>
+      {% endif %}
+
+
   </main>
 
   <aside class="post__aside">

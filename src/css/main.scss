@@ -62,3 +62,25 @@
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
+.project-card {
+  height: 550px;
+  background-color: #eeeeee;
+  a {
+  color: #399f7a;
+  text-decoration: none;
+  }
+  a:hover{
+      color: #24644d;
+      text-decoration: none;
+  }
+}
+.project-card:hover {
+  background: rgba(0, 0, 0, 0.125);
+}
+.card-image {
+  max-width: 75%;
+}
+
+.color-test{
+  color:#399f7a ;
+}
