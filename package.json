@@ -39,7 +39,7 @@
     "dev:assets": "set ELEVENTY_ENV=development&&webpack --mode production --watch",
     "dev:site": "set ELEVENTY_ENV=development&&eleventy --serve",
     "build:assets": "webpack --mode production",
-    "build:site": "set ELEVENTY_ENV=production eleventy",
+    "build:site": "set ELEVENTY_ENV=production&&eleventy",
     "clean": "rd /s /q public"
   },
   "dependencies": {
