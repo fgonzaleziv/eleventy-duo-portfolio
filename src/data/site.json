@@ -1,17 +1,17 @@
 {
   "name": "Francisco Gonzalez IV",
-  "description": "Software Engineer focused on work",
+  "description": "Francisco, a software engineer based in Richmond, VA specializing in web-based solutions.",
   "url": "https://franciscogonzaleziv.com",
   "author": {
-    "name": "Francisco Gonzalez IC",
+    "name": "Francisco Gonzalez IV",
     "email": "contact@franciscogonzaleziv.com",
     "twitterHandle": "author_handle"
   },
-  "defaultSocialImage": "/images/default-social-image.png",
+  "defaultSocialImage": "/images/default-social-image.webp",
   "headerLinks": [
     {
-      "text": "Blog",
-      "url": "/blog",
+      "text": "Projects",
+      "url": "/projects",
       "external": false
     },
     {

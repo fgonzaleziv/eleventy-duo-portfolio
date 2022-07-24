@@ -63,22 +63,33 @@
   padding-right: 0.5rem;
 }
 .project-card {
-  height: 550px;
+  min-height: 364px;
   background-color: #eeeeee;
   a {
-  color: #399f7a;
+  // color: #399f7a;
   text-decoration: none;
   }
   a:hover{
-      color: #24644d;
+      // color: #24644d;
       text-decoration: none;
   }
 }
 .project-card:hover {
   background: rgba(0, 0, 0, 0.125);
 }
+@include media-breakpoint-up(md) {
+  .project-card {
+    min-height:340px;
+  }
+}
+@include media-breakpoint-up(lg) {
+  .project-card {
+    min-height:640px;
+  }
+}
 .card-image {
   max-width: 75%;
+  max-height: 75%;
 }
 
 .color-test{

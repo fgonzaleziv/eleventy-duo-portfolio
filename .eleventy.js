@@ -5,6 +5,7 @@ const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 const htmlmin = require('html-minifier')
 const fs = require('fs');
 const path = require('path');
+const Image = require("@11ty/eleventy-img");
 
 const isDev = process.env.ELEVENTY_ENV === 'development';
 const isProd = process.env.ELEVENTY_ENV === 'production'
@@ -23,6 +24,55 @@ const manifest = isDev
     }
   : JSON.parse(fs.readFileSync(manifestPath, { encoding: 'utf8' }));
 
+  async function imageShortcode(src, alt,  sizes = "776", classes) {
+    let metadata = await Image(src, {
+      widths: [343, 600, 776, 1076],
+      formats: ["webp","png"],
+      outputDir: './public/img',
+      urlPath: "../../img/",
+      sharpWebpOptions: {
+        quality: 90
+      },
+      filenameFormat: function (id, src, width, format, options) {
+        const extension = path.extname(src);
+        const name = path.basename(src, extension);
+    
+        return `${name}-${width}w.${format}`;
+      }
+    });
+  
+    let imageAttributes = {
+      alt,
+      sizes,
+      loading: "lazy",
+      decoding: "async",
+      class:"img-fluid "+classes
+    };
+    // You bet we throw an error on missing alt in `imageAttributes` (alt="" works okay)
+    return Image.generateHTML(metadata, imageAttributes);
+  }
+  async function AnimatedImageShortcode(src, alt,  sizes = "776", classes) {
+    let metadata = await Image(src, {
+      widths: [343, 600, 776],
+      formats: ["webp","gif"],
+      sharpOptions: {
+        animated: true
+      },
+      outputDir: './public/img',
+      urlPath: "../../img/"
+    });
+  
+    let imageAttributes = {
+      alt,
+      sizes,
+      loading: "lazy",
+      decoding: "async",
+      class:"img-fluid "+classes
+    };
+    // You bet we throw an error on missing alt in `imageAttributes` (alt="" works okay)
+    return Image.generateHTML(metadata, imageAttributes);
+  }
+
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(readingTime);
   eleventyConfig.addPlugin(pluginRss);
@@ -30,6 +80,8 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.setDataDeepMerge(true);
   eleventyConfig.addPassthroughCopy({ 'src/images': 'images' });
   eleventyConfig.setBrowserSyncConfig({ files: [manifestPath] });
+  eleventyConfig.addNunjucksAsyncShortcode("image", imageShortcode);
+  eleventyConfig.addNunjucksAsyncShortcode("imageAnimated", AnimatedImageShortcode);
 
   eleventyConfig.addShortcode('bundledcss', function () {
     return manifest['main.scss']

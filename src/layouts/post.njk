@@ -19,7 +19,10 @@ layout: base.njk
 
        {% if screen %}
            <div class="row">
-            <img src="{{ '../../'+screen }}" class="img-fluid col-10 mx-auto">
+            {# <img src="{{ '../../'+screen }}" class="img-fluid col-10 mx-auto"> #}
+            <div class="col-10 mx-auto">
+          {% image './src/'+screen, screen, "776","" %}
+            </div>
                 </div>
       {% endif %}
 
