@@ -2,7 +2,7 @@
 title: About Francisco
 layout: about.njk
 name: Francisco Gonzalez IV
-image: '/images/me.webp'
+image: '/images/default-social-image.webp'
 ---
 
 Hello!
@@ -12,4 +12,4 @@ Through my work, I aim to make a positive impact on the world. That’s why I cu
 
 This drive toward direct-impact work grew through my ventures as a freelance web developer. Some of my favorite projects have been building and customizing websites for small business owners. Take a look here
 
-In my spare time you can probably find me outdoors- mountain biking, hiking, picnicking, or rock climbing. 
+In my spare time you can probably find me outdoors- mountain biking, hiking, or rock climbing. 
