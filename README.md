@@ -2,29 +2,6 @@
 
 Eleventy Duo is a minimal and beautiful Eleventy theme for personal blogs.
 
-![demo site screenshot](./screenshot.png)
-
-### [Live demo](https://eleventyduo.netlify.app)
-
-## Features
-
-- Fully responsive
-
-- SEO metadata and Open Graph tags
-
-- Maximize lighthouse score
-
-- Cache busting
-
-- 404 page
-
-- RSS feed for posts
-
-- Tags support
-
-- Pagination support
-
-- Syntax highlighting with PrismJS
 
 ## Getting Started
 
@@ -113,33 +90,6 @@ title: Generic page
 Contents
 ```
 
-## Using Forestry as your CMS
-
-This project is preconfigured to work with Forestry as a way to manage your content. Forestry makes changes by editing markdown or data files, uploading media to the correct directory and committing these updates to your repo directly.
-
-Eleventy Duo has Forestry CMS pre-configured as standard. You can customize the configuration by editing `.forestry/settings.yml.`
-
-Sign up for a free [Forestry](https://forestry.io) account
-
-Import your repo as a new [Eleventy project](https://forestry.io/docs/quickstart/setup-site/#import-site-from-repo)
-
-Once the site is imported in Forestry, go to settings/previews to start the preview server. You'll be able to preview the final rendering before publishing.
-
-The basic CMS setup allows you to edit the following:
-
-- Home page: Edit the content on your homepage.
-
-- About page: Edit the content of your about page.
-
-- Posts: Create and edit blog posts.
-
-- Generic pages: Create generic pages that use a similar layout to posts.
-
-- Global site data: Various bits of global site data such as your url, title, and other details.
-
-You can add new blog posts, [data files](https://forestry.io/docs/editing/data-files/), or entire pages to fit your needs. You can also customize [how media is handled](https://forestry.io/docs/media/), by configurating gitLFS, Cloudinary, S3, or Netlify Large Media.
-
-You can set up a [remote admin](https://forestry.io/docs/editing/remote-admin/) for content editors to log in directly to yoururl.com/admin to make content updates.
 
 ## Deployment
 

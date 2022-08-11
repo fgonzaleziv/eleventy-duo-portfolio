@@ -1,14 +1,15 @@
 ---
-title: About Aidan Charles Powell
+title: About Francisco
 layout: about.njk
-name: Aidan Charles Powell
-image: '/images/me.jpeg'
+name: Francisco Gonzalez IV
+image: '/images/default-social-image.webp'
 ---
 
-Aidan Charles Powell is a 23-year-old health centre receptionist who enjoys watching television, eating out and social media. He is generous and giving, but can also be very rude and a bit lazy.
+Hello!
 
-He is a Jedi who defines himself as straight. He has a degree in medicine. He is a vegetarian. He is obsessed with vintage dresses.
+I’m Francisco, a software engineer based in Richmond, VA specializing in web-based solutions.
+Through my work, I aim to make a positive impact on the world. That’s why I currently work at [UNOS](https://unos.org/), expanding and improving enterprise software that helps match organ donors to recipients. 
 
-He grew up in a middle class neighbourhood. After his mother died when he was young, he was raised by his father
+This drive toward direct-impact work grew through my ventures as a freelance web developer. Some of my favorite projects have been building and customizing websites for small business owners. Take a look here
 
-He is currently married to Maureen Erika Quinn. Maureen is 13 years older than him and works as a sales assistant.
+In my spare time you can probably find me outdoors- mountain biking, hiking, or rock climbing. 

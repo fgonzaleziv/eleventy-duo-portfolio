@@ -1,0 +1,12 @@
+  {% for post in postslist | reverse %}
+  <div class="col ">
+    <div class="card project-card">
+      <div class="card-image m-auto shadow">
+        {# <img src="{{ post.data.screen }}" class="card-img" alt="..."> #}
+        {% image './src/'+post.data.screen, post.data.screen,"343,600", "card-img" %}
+        </div>
+        <h4 class="card-title align-items-end text-center p-2"><a class="stretched-link" href="{{ post.url }}">{{ post.data.title }}</a></h4>
+        
+    </div>
+  </div>
+  {% endfor %}

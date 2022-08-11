@@ -1,13 +1,18 @@
 --- 
 layout: base.njk 
-permalink: /blog/ 
+permalink: /projects/ 
 ---
 
-<h1>All Posts</h1>
+<h1>All Projects</h1>
 
-<div class="tags">
+{# <div class="tags">
   {% include "tags-list.njk" %}
-</div>
-
-{% set postslist = collections.posts %}
-{% include "posts-list.njk" %}
+</div> #}
+ <div class="row justify-content-center">
+{% set postslist = collections.posts %} 
+ {% include "summary-list.njk" %}
+ </div>
+  {# <div class="row row-cols-1 row-cols-md-2 g-3">
+    {% set postslist = collections.posts %}
+  {% include "card-list.njk" %}
+</div> #}

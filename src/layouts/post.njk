@@ -5,26 +5,37 @@ layout: base.njk
 <article class="post">
   <header class="post__header">
     <h1>{{ title }}</h1>
-    <div class="post__details">
+    {# <div class="post__details">
       <time datetime="{{ page.date | htmlDateString }}">
         {{ page.date | readableDate }}
       </time>
       <span> | </span>
       <span>{{ content | readingTime }} read</span>
-    </div>
+    </div> #}
   </header>
 
   <main class="post__content">
     {{ content | safe }}
+
+       {% if screen %}
+           <div class="row">
+            {# <img src="{{ '../../'+screen }}" class="img-fluid col-10 mx-auto"> #}
+            <div class="col-10 mx-auto">
+          {% image './src/'+screen, screen, "776","" %}
+            </div>
+                </div>
+      {% endif %}
+
+
   </main>
 
   <aside class="post__aside">
-    <div class="post__tags">
+    {# <div class="post__tags">
       {% for tag in tags | pageTags %}
         {% set tagUrl %}/tags/{{ tag }}/{% endset %}
         <a href="{{ tagUrl | url }}">#{{ tag }}</a>
       {% endfor %}
-    </div>
+    </div> #}
 
     <nav class="post__pagination">
       {%- set nextPost = collections.posts | getNextCollectionItem(page) %}

@@ -48,55 +48,59 @@
       <meta property="og:image" content="{{ socialImage | url | absoluteUrl(site.url) }}"/>
       <meta name="twitter:image" content="{{ socialImage | url | absoluteUrl(site.url) }}"/>
     {% endif %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RH0QSFHB54"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-    {# Add mermaid -- start #}
-      <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-      <script>mermaid.initialize({startOnLoad:true});</script>
-    {# Add mermaid -- end #}
+      gtag('config', 'G-RH0QSFHB54');
+    </script>
   </head>
   <body>
-    <div class="layout-wrapper">
-
-      <header class="header">
-        <div class="header__content">
-          <h1 class="site-title">
-            <a href={{ "/" | url }}>
+    <div class="container">
+      <header class="py-3 mb-3 border-bottom">
+        <div class="d-flex flex-wrap align-items-center justify-content-lg-start navbar navbar-expand-lg ">
+          <h1 class="fs-4">
+            <a href={{ "/" | url }} class="text-decoration-none text-dark">
               {{site.name}}
             </a>
           </h1>
 
           {% if site.headerLinks %}
-            <nav class="nav">
-              <ul class="nav__list">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+              <ul class="navbar-nav col-12 col-lg-auto ms-lg-auto mb-2 justify-content-end mb-md-0">
                 {% for item in site.headerLinks %}
                   {% set currentAttribute = '' %}
                   {% set externalAttribute = '' %}
+                  {% set currentClassAttribute = '' %}
 
                   {% if item.external %}
                     {% set externalAttribute = 'target="_blank" rel="noopener noreferrer"' %}
                   {% endif %}
 
-                  {% if page.url == item.url %}
+                  {% if page.url == (item.url+'/') %}
                     {% set currentAttribute = 'aria-current="page"' %}
+                    {% set currentClassAttribute = 'active' %}
                   {% endif %}
-
                   <li class="nav-item">
-                    <a href="{{ item.url | url }}" {{ currentAttribute | safe }} {{ externalAttribute | safe }}>{{ item.text }}</a>
+                    <a href="{{ item.url | url }}" {{ currentAttribute | safe }} {{ externalAttribute | safe }} class="nav-link px-2 {{ currentClassAttribute | safe }}">{{ item.text }}</a>
                   </li>
                 {% endfor %}
               </ul>
-            </nav>
-
+            </div>
           {% endif %}
-
-        </div>
+                  </div>
       </header>
 
-      <main class="main">
+      <main class="">
         {{ content | safe }}
       </main>
 
-      <footer class="footer">
+      <footer class="footer mt-3">
         <div class="footer__content">
 
           <ul class="hero__social-links">
@@ -132,10 +136,7 @@
 
           {% if site.showFooterAttribution %}
             <p class="footer__attribution">
-          Created by
-      <a href="https://twitter.com/yinkakun" target="_blank" rel="noopener">Yinka,</a>
        Powered by <a href="https://www.11ty.dev" target="_blank" rel="noopener">11ty,</a>
-        Checkout <a href="https://github.com/yinkakun/eleventy-duo" target="_blank" rel="noopener noreferrer">project's github repo </a>
             </p>
           {% endif %}
 

@@ -1,0 +1,97 @@
+/* @import 'global.css';
+@import 'variable.css';
+@import 'prism-theme.css';
+@import 'typography.css';
+@import 'post-list.css';
+@import 'hero.css';
+@import 'header.css';
+
+@import 'post.css';
+@import 'about.css'; */
+@import "footer.scss";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+.layout-wrapper {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-height: 100%;
+}
+
+.main {
+  display: flex;
+  padding-bottom: 4rem;
+  flex-direction: column;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  min-width: 0;
+  max-width: 48.75rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.post-list__title {
+  margin-top: 0.5rem;
+
+  a {
+    text-decoration: none;
+    color: rgb(41, 41, 41);
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+.post__pagination {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post__pagination > *:only-child {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.post__pagination a {
+  display: flex;
+  align-items: center;
+}
+.post__pagination span {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.project-card {
+  min-height: 364px;
+  background-color: #eeeeee;
+  a {
+  // color: #399f7a;
+  text-decoration: none;
+  }
+  a:hover{
+      // color: #24644d;
+      text-decoration: none;
+  }
+}
+.project-card:hover {
+  background: rgba(0, 0, 0, 0.125);
+}
+@include media-breakpoint-up(md) {
+  .project-card {
+    min-height:340px;
+  }
+}
+@include media-breakpoint-up(lg) {
+  .project-card {
+    min-height:640px;
+  }
+}
+.card-image {
+  max-width: 75%;
+  max-height: 75%;
+}
+
+.color-test{
+  color:#399f7a ;
+}

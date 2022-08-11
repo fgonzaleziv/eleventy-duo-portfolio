@@ -1,8 +1,9 @@
 ---
 layout: home
-title: 'Eleventy Duo'
+title: 'Francisco Gonzalez IV - Software Engineer'
 ---
 
-# Hello World
+# Hello!
 
-Eleventy Duo is a minimal and beautiful Eleventy theme for personal blogs. Checkout the [project's github repo](https://github.com/yinkakun/eleventy-duo) for more info.
+I’m Francisco, a software engineer based in Richmond, VA specializing in web-based solutions.
+Through my work, I aim to make a positive impact on the world.
