@@ -7,4 +7,4 @@ permalink: posts/{{ title | slug }}/index.html
 screen: images/motherofsunsrva.com.png
 url: https://motherofsunsrva.com
 ---
-I created this static site landing page for local hair salon Mother of Suns, using HTML/CSS. Currently transitioning to a CI/CD static site pipeline and expanding the site to include more pages.
+I created this static site landing page for local hair salon Mother of Suns, using HTML/CSS. Currently hosted using Deno Deploy
