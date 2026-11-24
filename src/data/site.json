@@ -5,9 +5,9 @@
   "author": {
     "name": "Francisco Gonzalez IV",
     "email": "contact@franciscogonzaleziv.com",
-    "twitterHandle": "author_handle"
+    "twitterHandle": ""
   },
-  "defaultSocialImage": "/images/default-social-image.webp",
+  "defaultSocialImage": "/images/about_me.jpg",
   "headerLinks": [
     {
       "text": "Projects",

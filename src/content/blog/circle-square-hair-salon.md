@@ -9,4 +9,4 @@ order: 4
 ---
 For Circle Square Salon, I developed a customized JavaScript tooltip integration within Squarespace to alleviate customer confusions about price breakdown for services. Additionally, I added a Community Engagement page to their site, following branding details and client direction.
 
-<p><img alt="Tooltip utilizing popper.js" class="img-fluid card-img col-6 mx-auto d-block" src="/images/circle-square-popover.gif" /></p>
+![Tooltip utilizing popper.js](/images/circle-square-popover.gif)

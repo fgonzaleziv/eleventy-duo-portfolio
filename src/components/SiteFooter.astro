@@ -1,0 +1,63 @@
+---
+import BrandGithub from "@tabler/icons/outline/brand-github.svg";
+import Rss from "@tabler/icons/outline/rss.svg";
+import { Separator } from "@/components/starwind/separator";
+import site from "@/data/site.json";
+
+const currentYear = new Date().getFullYear();
+const links = [...(site.socialLinks ?? []), ...(site.footerLinks ?? [])];
+---
+
+<footer class="mt-16 w-full">
+  <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+    <Separator />
+
+    <div
+      class="flex flex-col items-center justify-between gap-4 py-8 text-sm text-muted-foreground sm:flex-row"
+    >
+      <p class="text-center sm:text-left">
+        &copy; {currentYear} {site.name}
+      </p>
+
+      {
+        links.length > 0 && (
+          <ul class="flex flex-wrap items-center justify-center gap-2">
+            {links.map((item) => {
+              const lower = item.text.toLowerCase();
+              return (
+                <li>
+                  <a
+                    href={item.url}
+                    target={item.external ? "_blank" : undefined}
+                    rel={item.external ? "noopener noreferrer" : undefined}
+                    class="inline-flex min-h-11 items-center gap-1.5 rounded-md px-3 py-2 font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-outline"
+                  >
+                    {lower === "github" && <BrandGithub class="size-4" aria-hidden="true" />}
+                    {lower === "rss" && <Rss class="size-4" aria-hidden="true" />}
+                    <span>{item.text}</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        )
+      }
+    </div>
+
+    {
+      site.showFooterAttribution && (
+        <p class="pb-8 text-center text-xs text-muted-foreground">
+          Powered by{" "}
+          <a
+            href="https://astro.build"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline underline-offset-4 hover:text-foreground"
+          >
+            Astro
+          </a>
+        </p>
+      )
+    }
+  </div>
+</footer>

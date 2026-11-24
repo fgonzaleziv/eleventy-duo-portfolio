@@ -1,30 +1,96 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from "astro:assets";
+import ArrowRight from "@tabler/icons/outline/arrow-right.svg";
+import BrandGithub from "@tabler/icons/outline/brand-github.svg";
+import MapPin from "@tabler/icons/outline/map-pin.svg";
+import aboutPortrait from "@/assets/images/about_me.jpg";
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+import { Separator } from "@/components/starwind/separator";
+import site from "@/data/site.json";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const githubLink = site.footerLinks?.find((link) => link.text.toLowerCase() === "github");
 ---
 
 <BaseLayout title="About Francisco">
-  <div class="about">
-    <h1>About Francisco Gonzalez IV</h1>
-    <div class="row justify-content-center">
-      <div class="col-md-10">
-        <img
-          src="/images/about_me.jpg"
-          alt="About Francisco Gonzalez IV"
-          loading="lazy"
-          decoding="async"
-          class="img-fluid"
-        />
-        <p>Hello!</p>
+  <section class="py-10 sm:py-14">
+    <div class="mb-8 space-y-3">
+      <Badge tone="primary-accent" appearance="soft" size="sm" class="font-mono">
+        <MapPin class="size-3.5" aria-hidden="true" />
+        <span>Richmond, VA</span>
+      </Badge>
+
+      <h1 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+        About Francisco Gonzalez IV
+      </h1>
+    </div>
+
+    <Separator class="mb-8 sm:mb-10" />
+
+    <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-12 md:gap-10">
+      <div class="md:order-2 md:col-span-5 lg:col-span-4">
+        <div
+          class="mx-auto max-w-xs overflow-hidden rounded-2xl border border-border/80 bg-card p-2 shadow-sm md:max-w-none"
+        >
+          <Image
+            src={aboutPortrait}
+            alt="About Francisco Gonzalez IV"
+            widths={[400, 720]}
+            sizes="(max-width: 767px) 320px, 340px"
+            format="webp"
+            loading="eager"
+            decoding="async"
+            class="h-auto w-full rounded-xl object-cover"
+          />
+        </div>
+      </div>
+
+      <div class="prose-portfolio md:order-1 md:col-span-7 lg:col-span-8">
+        <p class="text-xl font-medium text-foreground">Hello!</p>
+
         <p>
-          I'm Francisco, a software engineer based in Richmond, VA specializing in web-based solutions. Through my work, I aim to make a positive impact on the world. That's why I currently work at <a href="https://unos.org/">UNOS</a>, expanding and improving enterprise software that helps match organ donors to recipients.
+          I'm Francisco, a software engineer based in Richmond, VA specializing in web-based
+          solutions. Through my work, I aim to make a positive impact on the world. That's why I
+          currently work at{" "}
+          <a href="https://unos.org/" target="_blank" rel="noopener noreferrer">UNOS</a>, expanding
+          and improving enterprise software that helps match organ donors to recipients.
         </p>
+
         <p>
-          This drive toward direct-impact work grew through my ventures as a freelance web developer. Some of my favorite projects have been building and customizing websites for small business owners. Take a look here
+          This drive toward direct-impact work grew through my ventures as a freelance web
+          developer. Some of my favorite projects have been building and customizing websites for
+          small business owners. <a href="/projects/">Take a look here</a>
         </p>
+
         <p>
-          In my spare time you can probably find me outdoors- mountain biking, hiking, or rock climbing.
+          In my spare time you can probably find me outdoors- mountain biking, hiking, or rock
+          climbing.
         </p>
+
+        <div class="flex flex-wrap items-center gap-3 pt-4">
+          <Button href="/projects/" variant="primary" size="md" class="no-underline!">
+            <span>Browse Projects</span>
+            <ArrowRight class="size-4" aria-hidden="true" />
+          </Button>
+
+          {
+            githubLink && (
+              <Button
+                href={githubLink.url}
+                variant="outline"
+                size="md"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="no-underline!"
+              >
+                <BrandGithub class="size-4" aria-hidden="true" />
+                <span>GitHub</span>
+              </Button>
+            )
+          }
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </BaseLayout>

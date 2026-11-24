@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
 
 export async function getStaticPaths() {
@@ -11,18 +11,18 @@ export async function getStaticPaths() {
     const previousPost = index < posts.length - 1 ? posts[index + 1] : null;
 
     return {
-      params: { slug: post.slug },
+      params: { slug: post.id },
       props: {
         post,
-        nextPost: nextPost ? { slug: nextPost.slug, data: nextPost.data } : null,
-        previousPost: previousPost ? { slug: previousPost.slug, data: previousPost.data } : null,
+        nextPost: nextPost ? { id: nextPost.id, data: nextPost.data } : null,
+        previousPost: previousPost ? { id: previousPost.id, data: previousPost.data } : null,
       },
     };
   });
 }
 
 const { post, nextPost, previousPost } = Astro.props;
-const { Content } = await post.render();
+const { Content } = await render(post);
 ---
 
 <PostLayout

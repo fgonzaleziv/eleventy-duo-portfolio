@@ -1,7 +1,8 @@
+import type { APIContext } from 'astro';
 import { getCollection } from 'astro:content';
 import site from '../data/site.json';
 
-export async function GET(context: any) {
+export async function GET(context: APIContext) {
   const posts = await getCollection('blog');
   posts.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 
@@ -10,7 +11,7 @@ export async function GET(context: any) {
 
   const urls = [
     ...staticPages.map((page) => `${siteUrl}/${page}`),
-    ...posts.map((post) => `${siteUrl}/posts/${post.slug}/`),
+    ...posts.map((post) => `${siteUrl}/posts/${post.id}/`),
   ];
 
   const sitemap = `<?xml version="1.0" encoding="utf-8"?>

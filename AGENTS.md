@@ -4,32 +4,31 @@ Welcome to the **Francisco Gonzalez IV Portfolio** repository. This document pro
 
 ---
 
-## 1. Project Overview & Architecture Migration
+## 1. Project Overview & Architecture
 
 - **Site Purpose**: Personal portfolio and project showcase for **Francisco Gonzalez IV**, a software engineer based in Richmond, VA.
 - **Production URL**: [https://worker.franciscogonzaleziv.com](https://worker.franciscogonzaleziv.com)
 - **Active Branch**: `astro`
-- **Current Framework**: **Astro v5** (Static Site Generation / SSG).
+- **Current Framework**: **Astro v7** (Static Site Generation / SSG) with Content Layer API.
+- **UI & Styling**: **Tailwind CSS v4** (`@tailwindcss/vite`) + **Starwind UI** source-owned Astro components (`src/components/starwind/`), using a mobile-first **Stone & Pine/Teal** light/dark design system.
 - **Deployment Platform**: **Cloudflare Workers** (Assets mode via Wrangler).
 - **CI/CD**: GitHub Actions (`.github/workflows/deploy.yml`) deploying directly to Cloudflare Workers on pushes to `main` or `master`.
 
 > [!IMPORTANT]
-> **Eleventy Migration Context**:
-> This repository was originally cloned from the `eleventy-duo` template (Eleventy, Nunjucks, Webpack, PostCSS).
-> It has been **migrated to Astro v5**.
-> - Do **not** use, edit, or recreate `.njk` templates, Webpack configs, or Eleventy plugins.
-> - Legacy Eleventy and Forestry configurations (`.eleventy.js` and `.forestry/`) have been completely cleaned up.
-> - All new pages, components, and layouts must be written in Astro (`.astro`), TypeScript (`.ts`), and standard SCSS/CSS.
+> **Migration Context**:
+> This repository was originally migrated from Eleventy (`eleventy-duo`) + Bootstrap 5 + Sass to **Astro v7 + Tailwind CSS v4 + Starwind UI**.
+> - Do **not** use, edit, or recreate `.njk` templates, Bootstrap classes, Sass files, or legacy `src/content/config.ts` collections.
+> - All pages, components, and layouts must be written in Astro (`.astro`), TypeScript (`.ts`), and Tailwind CSS v4 utilities / Starwind tokens.
 
 ---
 
 ## 2. Tech Stack
 
-- **Framework**: Astro `^5.4.2` (`output: "static"`, `trailingSlash: "always"`)
-- **RSS Feed**: `@astrojs/rss` (`^4.0.11`)
-- **Styling**: Bootstrap `^5.3.3`, Sass `^1.85.1`, custom modular CSS
+- **Framework**: Astro `^7.4.13` (`output: "static"`, `trailingSlash: "always"`)
+- **RSS Feed**: `@astrojs/rss` (`^4.0.19`)
+- **Styling & UI**: Tailwind CSS `^4.3.5` (`@tailwindcss/vite`), Starwind UI (`@starwind-ui/astro`, `tw-animate-css`, `tailwind-merge`, `tailwind-variants`, `@tabler/icons`)
 - **Deployment & Cloud**: Wrangler `^4.167.0` (Cloudflare Workers Static Assets)
-- **Node / Runtime**: Node 22 (also compatible with Deno via `deno.json`)
+- **Node / Runtime**: Node 22+ (also compatible with Deno via `deno.json`)
 
 ---
 
@@ -39,51 +38,51 @@ Welcome to the **Francisco Gonzalez IV Portfolio** repository. This document pro
 eleventy-duo/
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml          # GitHub Actions deployment to Cloudflare Workers
-├── public/                     # Static assets served at the root URL
-│   ├── images/                 # Project screenshots and public images
-│   └── favicon.ico             # Site favicon
+│       └── deploy.yml              # GitHub Actions deployment to Cloudflare Workers
+├── public/                         # Static assets served at the root URL
+│   ├── images/                     # Public images (OG social images, animated GIFs, favicon)
+│   └── favicon.ico                 # Site favicon
 ├── src/
+│   ├── assets/
+│   │   └── images/                 # Source images optimized by Astro <Image /> (WebP/srcset)
+│   ├── components/
+│   │   ├── starwind/               # Source-owned Starwind UI Astro components
+│   │   ├── ProjectCard.astro       # Reusable mobile-first project card (grid & list variants)
+│   │   ├── SiteFooter.astro        # Responsive site footer
+│   │   └── SiteHeader.astro        # Sticky header + mobile Starwind Sheet drawer + ThemeToggle
 │   ├── content/
-│   │   ├── blog/               # Markdown content for projects / blog posts
-│   │   │   ├── all-for-one-tattoo-shop.md
-│   │   │   ├── circle-square-hair-salon.md
-│   │   │   ├── hollybanks-lane.md
-│   │   │   └── mother-of-suns.md
-│   │   └── config.ts           # Astro content collection schema definition
+│   │   └── blog/                   # Markdown content for projects / blog posts
+│   │       ├── all-for-one-tattoo-shop.md
+│   │       ├── circle-square-hair-salon.md
+│   │       ├── hollybanks-lane.md
+│   │       └── mother-of-suns.md
+│   ├── content.config.ts           # Astro Content Layer collection schema (glob loader + astro/zod)
 │   ├── data/
-│   │   └── site.json           # Site metadata, author info, navigation & footer links
+│   │   └── site.json               # Site metadata, author info, navigation & footer links
 │   ├── layouts/
-│   │   ├── BaseLayout.astro    # Base HTML document, head meta/OG, analytics, nav & footer
-│   │   ├── HomeLayout.astro    # Homepage layout (hero banner + project grid)
-│   │   └── PostLayout.astro    # Project / post detail layout (content + pagination)
+│   │   ├── BaseLayout.astro        # Base HTML document, ThemeInitScript, meta/OG, GA, header & footer
+│   │   ├── HomeLayout.astro        # Homepage layout (hero banner + responsive project grid)
+│   │   └── PostLayout.astro        # Project detail layout (breadcrumb, metadata, showcase, pagination)
+│   ├── lib/
+│   │   └── images.ts               # Image metadata resolver, tag label formatter, URL display helper
 │   ├── pages/
-│   │   ├── index.astro         # Homepage (/)
-│   │   ├── about.astro         # About page (/about/)
-│   │   ├── projects.astro      # Projects index page (/projects/)
-│   │   ├── 404.astro           # 404 error page (/404.html)
-│   │   ├── feed.xml.ts         # Dynamic RSS feed generator (/feed.xml)
-│   │   ├── robots.txt.ts       # Dynamic robots.txt endpoint
-│   │   ├── sitemap.xml.ts      # Dynamic XML sitemap generator (/sitemap.xml)
+│   │   ├── index.astro             # Homepage (/)
+│   │   ├── about.astro             # About page (/about/)
+│   │   ├── projects.astro          # Projects index page (/projects/) with tag filter
+│   │   ├── 404.astro               # 404 error page (/404.html)
+│   │   ├── feed.xml.ts             # Dynamic RSS feed generator (/feed.xml)
+│   │   ├── robots.txt.ts           # Dynamic robots.txt endpoint
+│   │   ├── sitemap.xml.ts          # Dynamic XML sitemap generator (/sitemap.xml)
 │   │   └── posts/
-│   │       └── [...slug].astro # Dynamic post page routing (/posts/<slug>/)
+│   │       └── [...slug].astro     # Dynamic post page routing (/posts/<slug>/)
 │   └── styles/
-│       ├── main.scss           # Imports Bootstrap SCSS and footer.scss
-│       ├── footer.scss         # Footer styling
-│       ├── global.css          # Global page rules
-│       ├── header.css          # Header & navigation styles
-│       ├── hero.css            # Hero section styles
-│       ├── post.css            # Single post layout styles
-│       ├── post-list.css       # Project card and grid styles
-│       ├── about.css           # About page styling
-│       ├── not-found.css       # 404 page styling
-│       ├── typography.css      # Typography rules
-│       ├── variable.css        # CSS variables
-│       └── prism-theme.css     # Code syntax highlighting theme
-├── astro.config.mjs            # Astro configuration
-├── wrangler.json               # Cloudflare Workers configuration
-├── package.json                # Project dependencies and npm scripts
-└── deno.json                   # Deno task definitions (alternative runner)
+│       └── starwind.css            # Tailwind v4 entrypoint, Stone & Pine/Teal tokens, prose styles
+├── astro.config.mjs                # Astro + @tailwindcss/vite configuration
+├── starwind.config.json            # Starwind CLI configuration
+├── tsconfig.json                   # TypeScript strict config with @/* -> ./src/* alias
+├── wrangler.json                   # Cloudflare Workers configuration
+├── package.json                    # Project dependencies and npm scripts
+└── deno.json                       # Deno task definitions (alternative runner)
 ```
 
 ---
@@ -99,8 +98,7 @@ All standard development tasks can be run using `npm`:
 | `npm run preview` | Previews the `./dist/` build | Uses Astro's built-in preview server |
 | `npm run preview:worker` | Previews via Wrangler | Runs `wrangler dev` simulating Cloudflare Workers environment |
 | `npm run deploy` | Builds and deploys | Runs `astro build && wrangler deploy` |
-
-*Note: Deno tasks are also supported (`deno task dev`, `deno task build`, `deno task deploy`).*
+| `npx starwind@latest add <name>` | Adds a Starwind UI component | Installs native `.astro` files into `src/components/starwind/` |
 
 ---
 
@@ -108,81 +106,57 @@ All standard development tasks can be run using `npm`:
 
 ### Blog & Project Posts (`src/content/blog/`)
 
-Posts are managed using Astro Content Collections defined in `src/content/config.ts`.
+Posts are managed using Astro's Content Layer API defined in `src/content.config.ts` with `glob({ pattern: "**/*.md", base: "./src/content/blog" })` and `z` from `astro/zod`.
 
 #### Frontmatter Schema:
 ```yaml
 ---
 title: "Project Title"                      # Required: string
-date: "2024-01-01"                          # Required: string or Date
-tags: ["web-development", "react"]          # Optional: string array (defaults to [])
-description: "Brief summary of project"    # Optional: string (defaults to '')
-screen: "images/screenshot.png"             # Optional: string (path relative to root / public)
-url: "https://example.com"                  # Optional: string (external live URL)
+date: "2024-01-01"                          # Required: coerced Date
+tags: ["web-development", "javascript"]     # Optional: string array (defaults to [])
+description: "Brief summary of project"     # Optional: string (defaults to '')
+screen: "images/screenshot.png"             # Optional: string (matches public/images/ & src/assets/images/)
+url: "https://example.com"                  # Optional: URL string
 order: 1                                    # Optional: number (lower numbers appear first)
 ---
 ```
 
 > [!TIP]
 > - **Sorting**: Posts on the homepage and projects page are sorted by `order` ascending (`(a.data.order ?? 99) - (b.data.order ?? 99)`).
-> - **Images**: Place screenshots in `public/images/`. The `screen` frontmatter should be formatted without a leading slash (e.g. `images/filename.png`), because the layout templates prefix it with `/${post.data.screen}`.
+> - **Slugs & Rendering**: Use `post.id` for route URLs (`/posts/${post.id}/`) and `render(post)` from `astro:content`.
+> - **Images**: Place raster project screenshots in both `src/assets/images/` (for responsive WebP optimization via `<Image />` and `resolvePortfolioImage()`) and `public/images/` (for Open Graph metadata and direct static references). Animated GIFs live in `public/images/`.
 
 ### Site Configuration (`src/data/site.json`)
 
-Contains global site settings:
-- `name`: Site name / Author name.
-- `description`: Default meta description.
-- `url`: Canonical base URL (`https://worker.franciscogonzaleziv.com`).
-- `author`: Author details (`name`, `email`, `twitterHandle`).
-- `headerLinks`: Array of `{ text, url, external }` for top navigation.
-- `socialLinks`: Array of `{ text, url, external }` for social profiles.
-- `footerLinks`: Array of `{ text, url, external }` for footer links.
-- `showFooterAttribution`: Toggle footer attribution message.
+Contains global site settings (`name`, `description`, `url`, `author`, `defaultSocialImage`, `headerLinks`, `socialLinks`, `footerLinks`, `showFooterAttribution`).
 
 ---
 
 ## 6. Styling & Layout Conventions
 
-1. **Bootstrap 5 & Sass**:
-   - Bootstrap is imported via Sass in `src/styles/main.scss`.
-   - Bootstrap's JS bundle (`bootstrap.bundle.min.js`) is imported in `BaseLayout.astro`.
-   - *Note*: Dart Sass emits deprecation notices during build regarding `@import` and `if()` inside Bootstrap 5.3. These are expected and do not prevent builds from succeeding.
-2. **Modular CSS**:
-   - Custom CSS is split into component-specific files in `src/styles/` and imported into `BaseLayout.astro`.
-   - Prefer maintaining modularity when adding new styles.
-3. **Responsive Images**:
-   - Use `loading="lazy"` and `decoding="async"` on `<img>` tags.
-   - Use Bootstrap's `img-fluid` class where appropriate.
+1. **Starwind UI + Tailwind CSS v4**:
+   - Design tokens (`--background`, `--foreground`, `--primary`, `--primary-accent`, etc.) live in `src/styles/starwind.css` using the **Stone & Pine/Teal** palette for light and `.dark` themes.
+   - Prefer Starwind UI components (`@/components/starwind/*`) and Tailwind v4 utilities over custom CSS.
+   - `ThemeInitScript` (from `@starwind-ui/astro/theme`) is loaded in `<head>` of `BaseLayout.astro` to prevent flash of wrong theme.
+2. **Mobile-First Design**:
+   - Design for `375px` mobile viewports first, scaling cleanly to `md:` and `lg:`.
+   - Maintain accessible touch targets (`>= 44px`), single `<h1>` per page, and zero horizontal overflow.
 
 ---
 
-## 7. Routing & SEO
-
-- **Static Output**: Astro is configured with `output: "static"` and `trailingSlash: "always"`.
-- **Dynamic Endpoints**:
-  - `src/pages/feed.xml.ts`: RSS feed built with `@astrojs/rss`.
-  - `src/pages/sitemap.xml.ts`: Generates `sitemap.xml` dynamically across all static pages and blog posts.
-  - `src/pages/robots.txt.ts`: Serves robots instructions pointing to `sitemap.xml`.
-- **Analytics**: Google Analytics tag (`gtag.js`, ID `G-RH0QSFHB54`) is loaded in `BaseLayout.astro`.
-
----
-
-## 8. Deployment & Cloudflare Workers
+## 7. Deployment & Cloudflare Workers
 
 - Configuration file: `wrangler.json`.
 - Cloudflare Workers serves static assets from `./dist`.
 - Custom domain: `worker.franciscogonzaleziv.com`.
 - Not found routing: `404-page` routing to `404.html`.
-- CI/CD workflow: `.github/workflows/deploy.yml` requires GitHub secrets:
-  - `CLOUDFLARE_API_TOKEN`
-  - `CLOUDFLARE_ACCOUNT_ID`
+- CI/CD workflow: `.github/workflows/deploy.yml` requires `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
 
 ---
 
-## 9. Guidelines for AI Agents
+## 8. Guidelines for AI Agents
 
-1. **Verification**: Always run `npm run build` after making modifications to ensure static generation and TypeScript checks pass.
-2. **Content Collection Types**: When querying content, use `getCollection('blog')` from `astro:content`. Keep frontmatter aligned with the schema in `src/content/config.ts`.
-3. **Avoid Eleventy Artifacts**: Do not add or edit `.eleventy.js`, `.forestry/`, or Nunjucks templates.
-4. **Link Hygiene**: When linking within the site, respect the trailing slash convention (e.g., `/about/`, `/projects/`, `/posts/<slug>/`).
-5. **Asset Placement**: Put web-facing static images in `public/images/`.
+1. **Verification**: Always run `npm run build` after making modifications to verify Astro 7's strict HTML compiler, static generation, and TypeScript checks pass.
+2. **Content Collections**: Use `getCollection("blog")` and `render(post)` from `astro:content`, `post.id` for slugs, and `z` from `astro/zod`.
+3. **Avoid Legacy Artifacts**: Do not add Bootstrap, Sass, `.eleventy.js`, `.forestry/`, or Nunjucks templates.
+4. **Link Hygiene**: Respect the trailing slash convention (`/about/`, `/projects/`, `/posts/<id>/`).

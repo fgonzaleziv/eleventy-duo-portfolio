@@ -1,54 +1,201 @@
 ---
-import BaseLayout from './BaseLayout.astro';
+import { Image } from "astro:assets";
+import ArrowLeft from "@tabler/icons/outline/arrow-left.svg";
+import ArrowRight from "@tabler/icons/outline/arrow-right.svg";
+import Calendar from "@tabler/icons/outline/calendar.svg";
+import { Badge } from "@/components/starwind/badge";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/starwind/breadcrumb";
+import { Card } from "@/components/starwind/card";
+import { Separator } from "@/components/starwind/separator";
+import { formatTag, resolvePortfolioImage } from "@/lib/images";
+import BaseLayout from "./BaseLayout.astro";
+
+interface NavPost {
+  id: string;
+  data: {
+    title: string;
+  };
+}
 
 export interface Props {
   title: string;
-  date: any;
+  date: Date | string;
   tags?: string[];
   description?: string;
   screen?: string;
   url?: string;
-  nextPost?: any;
-  previousPost?: any;
+  nextPost?: NavPost | null;
+  previousPost?: NavPost | null;
 }
 
-const { title, date, tags, description, screen, url, nextPost, previousPost } = Astro.props;
+const { title, date, tags = [], description, screen, nextPost, previousPost } = Astro.props;
+
+const formattedDate = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZone: "UTC",
+}).format(new Date(date));
+
+const optimizedImage = resolvePortfolioImage(screen);
+const socialImage = screen ? `/${screen.replace(/^\/+/, "")}` : undefined;
 ---
 
-<BaseLayout title={title} description={description}>
-  <article class="post">
-    <header class="post__header">
-      <h1>{title}</h1>
+<BaseLayout title={title} description={description} socialImage={socialImage}>
+  <article class="py-8 sm:py-12">
+    <Breadcrumb class="mb-6">
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/projects/">Projects</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>{title}</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+
+    <header class="space-y-4">
+      <h1 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+        {title}
+      </h1>
+
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-3 pt-1">
+        <span class="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+          <Calendar class="size-4" aria-hidden="true" />
+          <time datetime={new Date(date).toISOString().slice(0, 10)}>{formattedDate}</time>
+        </span>
+      </div>
+
+      {
+        tags.length > 0 && (
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            {tags.map((tag) => (
+              <Badge tone="primary-accent" appearance="soft" size="sm" class="font-mono text-xs">
+                {formatTag(tag)}
+              </Badge>
+            ))}
+          </div>
+        )
+      }
     </header>
 
-    <main class="post__content">
+    <Separator class="my-8" />
+
+    <div class="prose-portfolio max-w-prose">
       <slot />
+    </div>
 
-      {screen && (
-        <div class="row">
-          <div class="col-10 mx-auto">
-            <img src={`/${screen}`} class="img-fluid" alt={title} loading="lazy" decoding="async" />
+    {
+      (optimizedImage || screen) && (
+        <figure class="mt-10 overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm">
+          <div class="flex items-center justify-between gap-3 border-b border-border/80 bg-muted/60 px-4 py-2.5">
+            <div class="flex items-center gap-1.5" aria-hidden="true">
+              <span class="size-2.5 rounded-full bg-border" />
+              <span class="size-2.5 rounded-full bg-border" />
+              <span class="size-2.5 rounded-full bg-border" />
+            </div>
+
+            <span class="truncate font-mono text-xs text-muted-foreground">{title}</span>
+
+            <div class="w-10" aria-hidden="true" />
           </div>
-        </div>
-      )}
-    </main>
 
-    <aside class="post__aside">
-      <nav class="post__pagination">
-        {nextPost && (
-          <a href={`/posts/${nextPost.slug}/`}>
-            <span>←</span>
-            <span>{nextPost.data.title}</span>
-          </a>
-        )}
+          <div class="bg-muted/30">
+            {optimizedImage ? (
+              <Image
+                src={optimizedImage}
+                alt={`${title} website screenshot`}
+                widths={[640, 1024, 1440]}
+                sizes="(max-width: 1024px) 100vw, 960px"
+                format="webp"
+                loading="eager"
+                decoding="async"
+                class="h-auto w-full"
+              />
+            ) : (
+              screen && (
+                <img
+                  src={`/${screen}`}
+                  alt={`${title} website screenshot`}
+                  loading="lazy"
+                  decoding="async"
+                  class="h-auto w-full"
+                />
+              )
+            )}
+          </div>
+        </figure>
+      )
+    }
 
-        {previousPost && (
-          <a href={`/posts/${previousPost.slug}/`}>
-            <span>{previousPost.data.title}</span>
-            <span>→</span>
-          </a>
-        )}
-      </nav>
-    </aside>
+    {
+      (nextPost || previousPost) && (
+        <aside class="mt-12">
+          <Separator class="mb-8" />
+
+          <nav aria-label="Project pagination" class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {nextPost ? (
+              <a
+                href={`/posts/${nextPost.id}/`}
+                class="group block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-outline"
+              >
+                <Card
+                  size="sm"
+                  class="h-full gap-1.5 px-5 py-4 transition-all group-hover:shadow-sm group-hover:ring-primary-accent/40"
+                >
+                  <span class="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+                    <ArrowLeft
+                      class="size-3.5 transition-transform group-hover:-translate-x-0.5"
+                      aria-hidden="true"
+                    />
+                    <span>Previous project</span>
+                  </span>
+                  <span class="text-base font-semibold text-foreground transition-colors group-hover:text-primary-accent">
+                    {nextPost.data.title}
+                  </span>
+                </Card>
+              </a>
+            ) : (
+              <div class="hidden sm:block" aria-hidden="true" />
+            )}
+
+            {previousPost && (
+              <a
+                href={`/posts/${previousPost.id}/`}
+                class="group block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-outline"
+              >
+                <Card
+                  size="sm"
+                  class="h-full gap-1.5 px-5 py-4 text-left transition-all group-hover:shadow-sm group-hover:ring-primary-accent/40 sm:text-right"
+                >
+                  <span class="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground sm:justify-end">
+                    <span>Next project</span>
+                    <ArrowRight
+                      class="size-3.5 transition-transform group-hover:translate-x-0.5"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <span class="text-base font-semibold text-foreground transition-colors group-hover:text-primary-accent">
+                    {previousPost.data.title}
+                  </span>
+                </Card>
+              </a>
+            )}
+          </nav>
+        </aside>
+      )
+    }
   </article>
 </BaseLayout>

@@ -1,61 +1,91 @@
 ---
-import BaseLayout from './BaseLayout.astro';
-import site from '../data/site.json';
+import ArrowDown from "@tabler/icons/outline/arrow-down.svg";
+import ArrowRight from "@tabler/icons/outline/arrow-right.svg";
+import MapPin from "@tabler/icons/outline/map-pin.svg";
+import type { CollectionEntry } from "astro:content";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+import { Separator } from "@/components/starwind/separator";
+import site from "@/data/site.json";
+import BaseLayout from "./BaseLayout.astro";
 
 export interface Props {
   title: string;
-  posts: any[];
+  posts: CollectionEntry<"blog">[];
 }
 
 const { title, posts } = Astro.props;
 ---
 
 <BaseLayout title={title}>
-  <header class="hero row">
-    <div class="hero-content">
-      <div class="intro col-12">
+  <section class="py-12 sm:py-16 md:py-20">
+    <div class="max-w-3xl">
+      <Badge tone="primary-accent" appearance="soft" size="sm" class="mb-5 font-mono">
+        <MapPin class="size-3.5" aria-hidden="true" />
+        <span>Richmond, VA &middot; Software Engineer</span>
+      </Badge>
+
+      <div
+        class="[&>h1]:text-4xl [&>h1]:font-bold [&>h1]:tracking-tight [&>h1]:text-foreground sm:[&>h1]:text-5xl lg:[&>h1]:text-6xl [&>p]:mt-5 [&>p]:max-w-2xl [&>p]:text-lg [&>p]:leading-relaxed [&>p]:text-muted-foreground sm:[&>p]:text-xl"
+      >
         <slot />
       </div>
 
-      {site.socialLinks && site.socialLinks.length > 0 && (
-        <ul class="hero__social-links">
-          {site.socialLinks.map(item => (
-            <li>
-              <a href={item.url} target={item.external ? '_blank' : undefined} rel={item.external ? 'noopener noreferrer' : undefined}>
-                {item.text}
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  </header>
+      <div class="mt-8 flex flex-wrap items-center gap-3">
+        <Button href="#projects" variant="primary" size="md">
+          <span>View Projects</span>
+          <ArrowDown class="size-4" aria-hidden="true" />
+        </Button>
 
-  <section class="post-list__wrapper">
-    <h2 class="post-list__heading">Projects:</h2>
-    <div class="row row-cols-1 row-cols-md-2 g-3">
-      {posts.map(post => (
-        <div class="col">
-          <div class="card project-card">
-            <div class="card-image m-auto shadow">
-              {post.data.screen && (
-                <img
-                  src={`/${post.data.screen}`}
-                  alt={post.data.title}
-                  loading="lazy"
-                  decoding="async"
-                  class="img-fluid card-img"
-                />
-              )}
-            </div>
-            <h4 class="card-title align-items-end text-center p-2">
-              <a class="stretched-link" href={`/posts/${post.slug}/`}>
-                {post.data.title}
-              </a>
-            </h4>
-          </div>
-        </div>
-      ))}
+        <Button href="/about/" variant="outline" size="md">
+          <span>About Me</span>
+          <ArrowRight class="size-4" aria-hidden="true" />
+        </Button>
+      </div>
+
+      {
+        site.socialLinks && site.socialLinks.length > 0 && (
+          <ul class="mt-6 flex flex-wrap gap-3 text-sm font-medium text-muted-foreground">
+            {site.socialLinks.map((item) => (
+              <li>
+                <a
+                  href={item.url}
+                  target={item.external ? "_blank" : undefined}
+                  rel={item.external ? "noopener noreferrer" : undefined}
+                  class="underline underline-offset-4 transition-colors hover:text-primary-accent"
+                >
+                  {item.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </section>
+
+  <Separator />
+
+  <section id="projects" class="scroll-mt-20 py-10 sm:py-14">
+    <div class="mb-6 flex flex-wrap items-end justify-between gap-4 sm:mb-8">
+      <div>
+        <h2 class="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+          Projects
+        </h2>
+        <p class="mt-1 text-sm text-muted-foreground sm:text-base">
+          Selected web applications and small business sites.
+        </p>
+      </div>
+
+      <Button href="/projects/" variant="ghost" size="sm" class="text-primary-accent">
+        <span>All projects</span>
+        <ArrowRight class="size-4" aria-hidden="true" />
+      </Button>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      {posts.map((post, index) => <ProjectCard post={post} variant="grid" eager={index < 2} />)}
     </div>
   </section>
 </BaseLayout>
