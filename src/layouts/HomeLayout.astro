@@ -1,0 +1,61 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import site from '../data/site.json';
+
+export interface Props {
+  title: string;
+  posts: any[];
+}
+
+const { title, posts } = Astro.props;
+---
+
+<BaseLayout title={title}>
+  <header class="hero row">
+    <div class="hero-content">
+      <div class="intro col-12">
+        <slot />
+      </div>
+
+      {site.socialLinks && site.socialLinks.length > 0 && (
+        <ul class="hero__social-links">
+          {site.socialLinks.map(item => (
+            <li>
+              <a href={item.url} target={item.external ? '_blank' : undefined} rel={item.external ? 'noopener noreferrer' : undefined}>
+                {item.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </header>
+
+  <section class="post-list__wrapper">
+    <h2 class="post-list__heading">Projects:</h2>
+    <div class="row row-cols-1 row-cols-md-2 g-3">
+      {posts.map(post => (
+        <div class="col">
+          <div class="card project-card">
+            <div class="card-image m-auto shadow">
+              {post.data.screen && (
+                <img
+                  src={`/${post.data.screen}`}
+                  alt={post.data.title}
+                  loading="lazy"
+                  decoding="async"
+                  class="img-fluid card-img"
+                />
+              )}
+            </div>
+            <h4 class="card-title align-items-end text-center p-2">
+              <a class="stretched-link" href={`/posts/${post.slug}/`}>
+                {post.data.title}
+              </a>
+            </h4>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+posts.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+---
+
+<BaseLayout title="Francisco Gonzalez IV">
+  <h1>All Projects</h1>
+  <div class="row justify-content-center">
+    {posts.map(post => (
+      <div class="col-md-10">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+          <div class="col-md-7 p-4 d-flex flex-column position-static">
+            <h3 class="mb-0">{post.data.title}</h3>
+            {post.data.url && <div class="mb-1 text-muted">{post.data.url}</div>}
+            <p class="card-text mb-auto">{post.data.description}</p>
+            <a href={`/posts/${post.slug}/`} class="stretched-link">Continue reading</a>
+          </div>
+          <div class="col-5 d-none d-lg-block">
+            {post.data.screen && (
+              <img
+                src={`/${post.data.screen}`}
+                alt={post.data.title}
+                loading="lazy"
+                decoding="async"
+                class="img-fluid card-img"
+              />
+            )}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</BaseLayout>

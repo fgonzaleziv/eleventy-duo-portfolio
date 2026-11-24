@@ -1,0 +1,54 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+export interface Props {
+  title: string;
+  date: any;
+  tags?: string[];
+  description?: string;
+  screen?: string;
+  url?: string;
+  nextPost?: any;
+  previousPost?: any;
+}
+
+const { title, date, tags, description, screen, url, nextPost, previousPost } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="post">
+    <header class="post__header">
+      <h1>{title}</h1>
+    </header>
+
+    <main class="post__content">
+      <slot />
+
+      {screen && (
+        <div class="row">
+          <div class="col-10 mx-auto">
+            <img src={`/${screen}`} class="img-fluid" alt={title} loading="lazy" decoding="async" />
+          </div>
+        </div>
+      )}
+    </main>
+
+    <aside class="post__aside">
+      <nav class="post__pagination">
+        {nextPost && (
+          <a href={`/posts/${nextPost.slug}/`}>
+            <span>←</span>
+            <span>{nextPost.data.title}</span>
+          </a>
+        )}
+
+        {previousPost && (
+          <a href={`/posts/${previousPost.slug}/`}>
+            <span>{previousPost.data.title}</span>
+            <span>→</span>
+          </a>
+        )}
+      </nav>
+    </aside>
+  </article>
+</BaseLayout>
