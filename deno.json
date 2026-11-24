@@ -1,8 +1,10 @@
 {
   "tasks": {
     "dev": "npx astro dev",
+    "start": "npx astro dev",
     "build": "npx astro build",
     "preview": "npx astro preview",
+    "preview:worker": "npx wrangler dev",
     "deploy": "npx astro build && npx wrangler deploy"
   }
 }

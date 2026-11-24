@@ -18,7 +18,7 @@ Welcome to the **Francisco Gonzalez IV Portfolio** repository. This document pro
 > This repository was originally cloned from the `eleventy-duo` template (Eleventy, Nunjucks, Webpack, PostCSS).
 > It has been **migrated to Astro v5**.
 > - Do **not** use, edit, or recreate `.njk` templates, Webpack configs, or Eleventy plugins.
-> - The files `.eleventy.js` and `.forestry/` are legacy artifacts from the original template and should not be modified unless performing a cleanup.
+> - Legacy Eleventy and Forestry configurations (`.eleventy.js` and `.forestry/`) have been completely cleaned up.
 > - All new pages, components, and layouts must be written in Astro (`.astro`), TypeScript (`.ts`), and standard SCSS/CSS.
 
 ---
@@ -28,7 +28,7 @@ Welcome to the **Francisco Gonzalez IV Portfolio** repository. This document pro
 - **Framework**: Astro `^5.4.2` (`output: "static"`, `trailingSlash: "always"`)
 - **RSS Feed**: `@astrojs/rss` (`^4.0.11`)
 - **Styling**: Bootstrap `^5.3.3`, Sass `^1.85.1`, custom modular CSS
-- **Deployment & Cloud**: Wrangler `^3.111.0` (Cloudflare Workers Static Assets)
+- **Deployment & Cloud**: Wrangler `^4.167.0` (Cloudflare Workers Static Assets)
 - **Node / Runtime**: Node 22 (also compatible with Deno via `deno.json`)
 
 ---
