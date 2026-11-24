@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "portfolio",
-  "compatibility_date": "2024-11-01",
+  "compatibility_date": "2026-11-23",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": "./dist",
@@ -13,5 +13,6 @@
       "pattern": "worker.franciscogonzaleziv.com",
       "custom_domain": true
     }
-  ]
+  ],
+  "previews": {}
 }
