@@ -28,7 +28,7 @@ Welcome to the **Francisco Gonzalez IV Portfolio** repository. This document pro
 - **RSS Feed**: `@astrojs/rss` (`^4.0.19`)
 - **Styling & UI**: Tailwind CSS `^4.3.5` (`@tailwindcss/vite`), Starwind UI (`@starwind-ui/astro`, `tw-animate-css`, `tailwind-merge`, `tailwind-variants`, `@tabler/icons`)
 - **Deployment & Cloud**: Wrangler `^4.167.0` (Cloudflare Workers Static Assets)
-- **Node / Runtime**: Node 22+ (also compatible with Deno via `deno.json`)
+- **Node / Runtime**: Node `>=22.23.4` (Astro 7 engine requirement; also compatible with Deno via `deno.json`)
 
 ---
 
@@ -141,6 +141,11 @@ Contains global site settings (`name`, `description`, `url`, `author`, `defaultS
 2. **Mobile-First Design**:
    - Design for `375px` mobile viewports first, scaling cleanly to `md:` and `lg:`.
    - Maintain accessible touch targets (`>= 44px`), single `<h1>` per page, and zero horizontal overflow.
+3. **Portfolio UI Conventions**:
+   - **Homepage project cards (`ProjectCard` `variant="grid"`)**: Wrap the entire card in a single `<a href="/posts/${post.id}/">` with no nested links so tapping anywhere opens the project details page.
+   - **No external client live-site links**: Although `url` remains optional in frontmatter metadata, do **not** render links to client sites in cards or detail pages (some legacy sites are no longer live).
+   - **No contact button**: Do **not** surface `site.author.email` or add contact/mailto buttons in the UI.
+   - **Projects header**: Keep `/projects/` clean without a project-count badge.
 
 ---
 
