@@ -1,0 +1,8 @@
+{
+  "tasks": {
+    "dev": "npx astro dev",
+    "build": "npx astro build",
+    "preview": "npx astro preview",
+    "deploy": "npx astro build && npx wrangler deploy"
+  }
+}
