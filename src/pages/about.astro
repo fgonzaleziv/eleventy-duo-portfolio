@@ -11,8 +11,9 @@ import { Separator } from "@/components/starwind/separator";
 import site from "@/data/site.json";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
-const githubLink = site.footerLinks?.find((link) => link.text.toLowerCase() === "github");
-const linkedinLink = site.footerLinks?.find((link) => link.text.toLowerCase() === "linkedin");
+const profileLinks = [...(site.socialLinks ?? []), ...(site.footerLinks ?? [])];
+const githubLink = profileLinks.find((link) => link.text.toLowerCase() === "github");
+const linkedinLink = profileLinks.find((link) => link.text.toLowerCase() === "linkedin");
 ---
 
 <BaseLayout title="About Francisco">
@@ -62,11 +63,11 @@ const linkedinLink = site.footerLinks?.find((link) => link.text.toLowerCase() ==
         <p>
           This drive toward direct-impact work grew through my ventures as a freelance web
           developer. Some of my favorite projects have been building and customizing websites for
-          small business owners. <a href="/projects/">Take a look here</a>
+          small business owners.
         </p>
 
         <p>
-          In my spare time you can probably find me outdoors- mountain biking, hiking, or rock
+          In my spare time you can probably find me outdoors—mountain biking, hiking, or rock
           climbing.
         </p>
 

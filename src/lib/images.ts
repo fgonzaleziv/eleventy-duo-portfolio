@@ -28,6 +28,13 @@ export function formatTag(tag: string): string {
     squarespace: "Squarespace",
     "web-development": "Web Dev",
     "small-business": "Small Business",
+    "e-commerce": "E-Commerce",
+    shopify: "Shopify",
+    liquid: "Liquid",
+    "static-site": "Static Site",
+    "deno-deploy": "Deno Deploy",
+    "ui-customization": "UI Customization",
+    "mobile-first": "Mobile-First",
   };
   if (overrides[tag]) return overrides[tag];
   return tag

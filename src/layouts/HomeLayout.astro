@@ -1,6 +1,8 @@
 ---
 import ArrowDown from "@tabler/icons/outline/arrow-down.svg";
 import ArrowRight from "@tabler/icons/outline/arrow-right.svg";
+import BrandGithub from "@tabler/icons/outline/brand-github.svg";
+import BrandLinkedin from "@tabler/icons/outline/brand-linkedin.svg";
 import MapPin from "@tabler/icons/outline/map-pin.svg";
 import type { CollectionEntry } from "astro:content";
 import ProjectCard from "@/components/ProjectCard.astro";
@@ -27,7 +29,7 @@ const { title, posts } = Astro.props;
       </Badge>
 
       <div
-        class="[&>h1]:text-4xl [&>h1]:font-bold [&>h1]:tracking-tight [&>h1]:text-foreground sm:[&>h1]:text-5xl lg:[&>h1]:text-6xl [&>p]:mt-5 [&>p]:max-w-2xl [&>p]:text-lg [&>p]:leading-relaxed [&>p]:text-muted-foreground sm:[&>p]:text-xl"
+        class="[&>h1]:text-4xl [&>h1]:font-bold [&>h1]:tracking-tight [&>h1]:text-foreground sm:[&>h1]:text-5xl lg:[&>h1]:text-6xl [&>p]:mt-5 [&>p]:max-w-2xl [&>p]:text-lg [&>p]:leading-relaxed [&>p]:text-muted-foreground sm:[&>p]:text-xl [&_a]:font-medium [&_a]:text-primary-accent [&_a]:underline [&_a]:decoration-primary-accent/40 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:text-primary hover:[&_a]:decoration-primary"
       >
         <slot />
       </div>
@@ -46,19 +48,24 @@ const { title, posts } = Astro.props;
 
       {
         site.socialLinks && site.socialLinks.length > 0 && (
-          <ul class="mt-6 flex flex-wrap gap-3 text-sm font-medium text-muted-foreground">
-            {site.socialLinks.map((item) => (
-              <li>
-                <a
-                  href={item.url}
-                  target={item.external ? "_blank" : undefined}
-                  rel={item.external ? "noopener noreferrer" : undefined}
-                  class="underline underline-offset-4 transition-colors hover:text-primary-accent"
-                >
-                  {item.text}
-                </a>
-              </li>
-            ))}
+          <ul class="mt-5 flex flex-wrap items-center gap-2 text-sm font-medium text-muted-foreground">
+            {site.socialLinks.map((item) => {
+              const lower = item.text.toLowerCase();
+              return (
+                <li>
+                  <a
+                    href={item.url}
+                    target={item.external ? "_blank" : undefined}
+                    rel={item.external ? "noopener noreferrer" : undefined}
+                    class="inline-flex min-h-11 items-center gap-1.5 rounded-md px-3 py-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-outline"
+                  >
+                    {lower === "github" && <BrandGithub class="size-4" aria-hidden="true" />}
+                    {lower === "linkedin" && <BrandLinkedin class="size-4" aria-hidden="true" />}
+                    <span>{item.text}</span>
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         )
       }

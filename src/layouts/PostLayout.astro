@@ -26,6 +26,7 @@ interface NavPost {
 export interface Props {
   title: string;
   date?: Date | string;
+  role?: string;
   tags?: string[];
   description?: string;
   screen?: string;
@@ -34,7 +35,7 @@ export interface Props {
   previousPost?: NavPost | null;
 }
 
-const { title, tags = [], description, screen, nextPost, previousPost } = Astro.props;
+const { title, role, tags = [], description, screen, nextPost, previousPost } = Astro.props;
 
 const optimizedImage = resolvePortfolioImage(screen);
 const socialImage = screen ? `/${screen.replace(/^\/+/, "")}` : undefined;
@@ -59,9 +60,25 @@ const socialImage = screen ? `/${screen.replace(/^\/+/, "")}` : undefined;
     </Breadcrumb>
 
     <header class="space-y-4">
+      {
+        role && (
+          <p class="font-mono text-xs font-medium tracking-wide text-primary-accent uppercase">
+            {role}
+          </p>
+        )
+      }
+
       <h1 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
         {title}
       </h1>
+
+      {
+        description && (
+          <p class="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            {description}
+          </p>
+        )
+      }
 
       {
         tags.length > 0 && (
@@ -78,13 +95,9 @@ const socialImage = screen ? `/${screen.replace(/^\/+/, "")}` : undefined;
 
     <Separator class="my-8" />
 
-    <div class="prose-portfolio max-w-prose">
-      <slot />
-    </div>
-
     {
       (optimizedImage || screen) && (
-        <figure class="mt-10 overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm">
+        <figure class="mb-10 overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm">
           <div class="flex items-center justify-between gap-3 border-b border-border/80 bg-muted/60 px-4 py-2.5">
             <div class="flex items-center gap-1.5" aria-hidden="true">
               <span class="size-2.5 rounded-full bg-border" />
@@ -124,6 +137,10 @@ const socialImage = screen ? `/${screen.replace(/^\/+/, "")}` : undefined;
         </figure>
       )
     }
+
+    <div class="prose-portfolio max-w-prose">
+      <slot />
+    </div>
 
     {
       (nextPost || previousPost) && (

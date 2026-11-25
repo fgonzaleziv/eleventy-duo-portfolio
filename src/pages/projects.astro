@@ -1,15 +1,11 @@
 ---
 import { getCollection } from "astro:content";
 import ProjectCard from "@/components/ProjectCard.astro";
-import { Button } from "@/components/starwind/button";
 import { Separator } from "@/components/starwind/separator";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { formatTag } from "@/lib/images";
 
 const posts = await getCollection("blog");
 posts.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
-
-const allTags = Array.from(new Set(posts.flatMap((post) => post.data.tags ?? []))).sort();
 ---
 
 <BaseLayout title="Projects" description="Selected web development projects by Francisco Gonzalez IV.">
@@ -17,44 +13,9 @@ const allTags = Array.from(new Set(posts.flatMap((post) => post.data.tags ?? [])
     <div>
       <h1 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">All Projects</h1>
       <p class="mt-2 text-base text-muted-foreground sm:text-lg">
-        Client websites and custom web solutions built with a focus on usability and reliability.
+        Client websites and custom front-end work.
       </p>
     </div>
-
-    {
-      allTags.length > 0 && (
-        <div
-          class="mt-6 flex flex-wrap items-center gap-2"
-          role="group"
-          aria-label="Filter projects by tag"
-          data-tag-filter-group
-        >
-          <Button
-            type="button"
-            variant="primary"
-            size="sm"
-            data-tag-filter="all"
-            aria-pressed="true"
-            class="rounded-full"
-          >
-            All
-          </Button>
-
-          {allTags.map((tag) => (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              data-tag-filter={tag}
-              aria-pressed="false"
-              class="rounded-full font-mono text-xs"
-            >
-              {formatTag(tag)}
-            </Button>
-          ))}
-        </div>
-      )
-    }
 
     <Separator class="my-8" />
 
@@ -62,51 +23,4 @@ const allTags = Array.from(new Set(posts.flatMap((post) => post.data.tags ?? [])
       {posts.map((post, index) => <ProjectCard post={post} variant="list" eager={index === 0} />)}
     </div>
   </section>
-
-  <script>
-    const initProjectFilters = () => {
-      const group = document.querySelector("[data-tag-filter-group]");
-      if (!group) return;
-
-      const buttons = Array.from(group.querySelectorAll<HTMLButtonElement>("[data-tag-filter]"));
-      const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-project-card]"));
-
-      const activeClasses = ["bg-primary", "text-primary-foreground", "border-transparent"];
-      const inactiveClasses = [
-        "bg-background",
-        "dark:bg-input/30",
-        "text-foreground",
-        "border-border",
-      ];
-
-      const applyFilter = (selectedTag: string) => {
-        buttons.forEach((btn) => {
-          const isSelected = btn.dataset.tagFilter === selectedTag;
-          btn.setAttribute("aria-pressed", String(isSelected));
-
-          if (isSelected) {
-            btn.classList.remove(...inactiveClasses);
-            btn.classList.add(...activeClasses);
-          } else {
-            btn.classList.remove(...activeClasses);
-            btn.classList.add(...inactiveClasses);
-          }
-        });
-
-        cards.forEach((card) => {
-          const tags = (card.dataset.projectTags || "").split(",").filter(Boolean);
-          const visible = selectedTag === "all" || tags.includes(selectedTag);
-          card.hidden = !visible;
-        });
-      };
-
-      buttons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          applyFilter(btn.dataset.tagFilter || "all");
-        });
-      });
-    };
-
-    initProjectFilters();
-  </script>
 </BaseLayout>

@@ -1,6 +1,6 @@
 {
   "name": "Francisco Gonzalez IV",
-  "description": "Francisco, a software engineer based in Richmond, VA specializing in web-based solutions.",
+  "description": "Francisco Gonzalez IV, a software engineer in Richmond, VA working on enterprise web software at UNOS and websites for small businesses.",
   "url": "https://worker.franciscogonzaleziv.com",
   "author": {
     "name": "Francisco Gonzalez IV",
@@ -21,14 +21,6 @@
     }
   ],
   "socialLinks": [
-
-  ],
-  "footerLinks": [
-    {
-      "text": "RSS",
-      "url": "/feed.xml",
-      "external": true
-    },
     {
       "text": "GitHub",
       "url": "https://github.com/fgonzaleziv",
@@ -40,5 +32,6 @@
       "external": true
     }
   ],
+  "footerLinks": [],
   "showFooterAttribution": false
 }
