@@ -1,5 +1,6 @@
 ---
 import BrandGithub from "@tabler/icons/outline/brand-github.svg";
+import BrandLinkedin from "@tabler/icons/outline/brand-linkedin.svg";
 import Menu2 from "@tabler/icons/outline/menu-2.svg";
 import Rss from "@tabler/icons/outline/rss.svg";
 import { Button } from "@/components/starwind/button";
@@ -154,6 +155,7 @@ const extraLinks = [...(site.socialLinks ?? []), ...(site.footerLinks ?? [])];
                         class="flex-1"
                       >
                         {lower === "github" && <BrandGithub class="size-4" aria-hidden="true" />}
+                        {lower === "linkedin" && <BrandLinkedin class="size-4" aria-hidden="true" />}
                         {lower === "rss" && <Rss class="size-4" aria-hidden="true" />}
                         <span>{item.text}</span>
                       </Button>

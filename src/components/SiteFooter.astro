@@ -1,5 +1,6 @@
 ---
 import BrandGithub from "@tabler/icons/outline/brand-github.svg";
+import BrandLinkedin from "@tabler/icons/outline/brand-linkedin.svg";
 import Rss from "@tabler/icons/outline/rss.svg";
 import { Separator } from "@/components/starwind/separator";
 import site from "@/data/site.json";
@@ -33,6 +34,7 @@ const links = [...(site.socialLinks ?? []), ...(site.footerLinks ?? [])];
                     class="inline-flex min-h-11 items-center gap-1.5 rounded-md px-3 py-2 font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-outline"
                   >
                     {lower === "github" && <BrandGithub class="size-4" aria-hidden="true" />}
+                    {lower === "linkedin" && <BrandLinkedin class="size-4" aria-hidden="true" />}
                     {lower === "rss" && <Rss class="size-4" aria-hidden="true" />}
                     <span>{item.text}</span>
                   </a>

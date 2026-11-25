@@ -33,6 +33,11 @@
       "text": "GitHub",
       "url": "https://github.com/fgonzaleziv",
       "external": true
+    },
+    {
+      "text": "LinkedIn",
+      "url": "https://www.linkedin.com/in/franciscogonzaleziv/",
+      "external": true
     }
   ],
   "showFooterAttribution": false

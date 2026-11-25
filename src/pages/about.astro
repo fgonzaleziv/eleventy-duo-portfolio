@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import ArrowRight from "@tabler/icons/outline/arrow-right.svg";
 import BrandGithub from "@tabler/icons/outline/brand-github.svg";
+import BrandLinkedin from "@tabler/icons/outline/brand-linkedin.svg";
 import MapPin from "@tabler/icons/outline/map-pin.svg";
 import aboutPortrait from "@/assets/images/about_me.jpg";
 import { Badge } from "@/components/starwind/badge";
@@ -11,6 +12,7 @@ import site from "@/data/site.json";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
 const githubLink = site.footerLinks?.find((link) => link.text.toLowerCase() === "github");
+const linkedinLink = site.footerLinks?.find((link) => link.text.toLowerCase() === "linkedin");
 ---
 
 <BaseLayout title="About Francisco">
@@ -86,6 +88,22 @@ const githubLink = site.footerLinks?.find((link) => link.text.toLowerCase() === 
               >
                 <BrandGithub class="size-4" aria-hidden="true" />
                 <span>GitHub</span>
+              </Button>
+            )
+          }
+
+          {
+            linkedinLink && (
+              <Button
+                href={linkedinLink.url}
+                variant="outline"
+                size="md"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="no-underline!"
+              >
+                <BrandLinkedin class="size-4" aria-hidden="true" />
+                <span>LinkedIn</span>
               </Button>
             )
           }
