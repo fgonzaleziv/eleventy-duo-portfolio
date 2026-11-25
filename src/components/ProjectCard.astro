@@ -1,0 +1,160 @@
+---
+import { Image } from "astro:assets";
+import ArrowRight from "@tabler/icons/outline/arrow-right.svg";
+import type { CollectionEntry } from "astro:content";
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/starwind/card";
+import { formatTag, resolvePortfolioImage } from "@/lib/images";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+  variant?: "grid" | "list";
+  eager?: boolean;
+}
+
+const { post, variant = "grid", eager = false } = Astro.props;
+const { title, description, screen, tags = [] } = post.data;
+const postHref = `/posts/${post.id}/`;
+const optimizedImage = resolvePortfolioImage(screen);
+---
+
+{
+  variant === "grid" ? (
+    <a
+      href={postHref}
+      class="group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-outline"
+      data-project-tags={tags.join(",")}
+    >
+      <Card class="h-full overflow-hidden pt-0 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:shadow-md group-hover:ring-primary-accent/40">
+        <div class="relative aspect-[16/10] w-full overflow-hidden border-b border-border/80 bg-muted">
+          {optimizedImage ? (
+            <Image
+              src={optimizedImage}
+              alt={title}
+              widths={[480, 768, 1080]}
+              sizes="(max-width: 767px) 100vw, 50vw"
+              format="webp"
+              loading={eager ? "eager" : "lazy"}
+              decoding="async"
+              class="size-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.03]"
+            />
+          ) : (
+            screen && (
+              <img
+                src={`/${screen}`}
+                alt={title}
+                loading={eager ? "eager" : "lazy"}
+                decoding="async"
+                class="size-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.03]"
+              />
+            )
+          )}
+        </div>
+
+        <CardHeader class="gap-2">
+          <CardTitle class="text-xl font-semibold tracking-tight transition-colors group-hover:text-primary-accent">
+            {title}
+          </CardTitle>
+          {description && (
+            <CardDescription class="line-clamp-2 text-sm leading-relaxed sm:text-base">
+              {description}
+            </CardDescription>
+          )}
+        </CardHeader>
+
+        {tags.length > 0 && (
+          <CardContent class="mt-auto pt-0">
+            <div class="flex flex-wrap gap-1.5">
+              {tags.map((tag) => (
+                <Badge tone="neutral" appearance="soft" size="sm" class="font-mono text-[11px]">
+                  {formatTag(tag)}
+                </Badge>
+              ))}
+            </div>
+          </CardContent>
+        )}
+      </Card>
+    </a>
+  ) : (
+    <Card
+      class="group overflow-hidden py-0 transition-all duration-200 hover:shadow-md hover:ring-primary-accent/40"
+      data-project-card
+      data-project-tags={tags.join(",")}
+    >
+      <div class="grid grid-cols-1 md:grid-cols-12">
+        <a
+          href={postHref}
+          class="relative block aspect-[16/10] w-full overflow-hidden border-b border-border/80 bg-muted md:col-span-5 md:aspect-auto md:min-h-60 md:border-r md:border-b-0"
+          tabindex="-1"
+          aria-hidden="true"
+        >
+          {optimizedImage ? (
+            <Image
+              src={optimizedImage}
+              alt={title}
+              widths={[480, 768, 1080]}
+              sizes="(max-width: 767px) 100vw, 42vw"
+              format="webp"
+              loading={eager ? "eager" : "lazy"}
+              decoding="async"
+              class="size-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.03]"
+            />
+          ) : (
+            screen && (
+              <img
+                src={`/${screen}`}
+                alt={title}
+                loading={eager ? "eager" : "lazy"}
+                decoding="async"
+                class="size-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.03]"
+              />
+            )
+          )}
+        </a>
+
+        <div class="flex flex-col justify-between md:col-span-7">
+          <div class="flex flex-col gap-3 p-5 sm:p-6">
+            <CardTitle class="text-xl font-semibold tracking-tight sm:text-2xl">
+              <a
+                href={postHref}
+                class="rounded-xs transition-colors hover:text-primary-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-outline"
+              >
+                {title}
+              </a>
+            </CardTitle>
+
+            {description && (
+              <p class="text-sm leading-relaxed text-muted-foreground sm:text-base">
+                {description}
+              </p>
+            )}
+
+            {tags.length > 0 && (
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                {tags.map((tag) => (
+                  <Badge tone="neutral" appearance="soft" size="sm" class="font-mono text-[11px]">
+                    {formatTag(tag)}
+                  </Badge>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2.5 border-t border-border/80 bg-muted/40 px-5 py-3.5 sm:px-6">
+            <Button href={postHref} variant="primary" size="sm">
+              <span>Continue reading</span>
+              <ArrowRight class="size-4" aria-hidden="true" />
+            </Button>
+          </div>
+        </div>
+      </div>
+    </Card>
+  )
+}

@@ -2,6 +2,7 @@ node_modules/
 dist/
 .astro/
 .wrangler/
+plan/
 npm-debug.*
 *.log
 .DS_Store

@@ -1,124 +1,106 @@
-# Eleventy Duo
+# Francisco Gonzalez IV — Portfolio
 
-Eleventy Duo is a minimal and beautiful Eleventy theme for personal blogs.
+Personal portfolio and project showcase for **Francisco Gonzalez IV**, a software engineer based in Richmond, VA.
 
+Live site: [https://worker.franciscogonzaleziv.com](https://worker.franciscogonzaleziv.com)
+
+## Tech Stack
+
+- **Framework**: [Astro 7](https://astro.build/) (Static Site Generation + Content Layer API)
+- **Styling & UI**: [Tailwind CSS v4](https://tailwindcss.com/) (`@tailwindcss/vite`) + [Starwind UI](https://starwind.dev/) source-owned Astro components (`Stone & Pine/Teal` light/dark theme)
+- **Icons & Fonts**: `@tabler/icons`, IBM Plex Sans & IBM Plex Mono
+- **Hosting & CI/CD**: [Cloudflare Workers](https://workers.cloudflare.com/) Static Assets via Wrangler + GitHub Actions
+
+## Prerequisites
+
+- **Node.js `>= 22.23.4`** (required by Astro 7) and npm (or Deno via `deno.json`)
 
 ## Getting Started
 
-- [Generate a new repo from this repository template](https://github.com/yinkakun/eleventy-duo/generate) which will copy this project into your own new repo.
+```bash
+# Install dependencies
+npm install
 
-- Clone your new repository with `git clone https://github.com/YOUR_REPO`,
+# Start local dev server (http://localhost:4321/)
+npm run dev
 
-- Navigate to the newly created repo
+# Build static production site into ./dist/
+npm run build
 
-- Install dependencies with `yarn install`
+# Preview production build locally
+npm run preview
 
-- Serve the site locally with `yarn dev`
-
-- Use `yarn build` to build a production version of the site.
-
-## Customize
-
-Open `data/site.json` and adjust the values to your details, it contains vital information to make the site your own. You'll need to change the description, title and url to match with the project, edit navigation items and social media links.
-
-You'll also need to replace the favicon and default social image in the `src/images/` directory with your own graphics.
-
-## Manually Edit contents
-
-### Homepage
-
-Edit the homepage content at `src/index.md`.
-
-Sample frontmatter for homepage.
-
-```
----
-layout: home
-title: 'Eleventy Duo'
----
-
-Contents
+# Preview in the Cloudflare Workers runtime
+npm run preview:worker
 ```
 
-### About page
+## Project Structure
 
-Edit the about page content at `src/about.md`.
-
-Sample frontmatter for about page.
-
-```
----
-title: About Aidan Charles Powell
-layout: about.njk
-name: Aidan Charles Powell
-image: '/images/me.jpeg'
----
-
-Contents
-```
-
-### Blog posts
-
-Blog contents is at `src/posts`. Delete placeholder blog posts. Do not delete the `posts.json` file. Create blog posts in markdown format.
-
-Sample frontmatter for blog posts.
-
-```
----
-title: Even yet another post with rich media
-date: '2020-12-24'
-tags: [demo-content, media]
-decription: The last person we talked to said this would be ready action item, and what do you feel you would bring to the table if you were hired for this position bells and whistles. #optional
----
-
-Contents
+```text
+├── .github/workflows/deploy.yml   # Cloudflare Workers CI/CD
+├── public/                        # Static files (favicon, OG images, animated GIFs)
+├── src/
+│   ├── assets/images/             # Raster images optimized to responsive WebP via Astro <Image />
+│   ├── components/
+│   │   ├── starwind/              # Source-owned Starwind UI components
+│   │   ├── ProjectCard.astro      # Mobile-first project card (grid & list variants)
+│   │   ├── SiteHeader.astro       # Sticky header, mobile Sheet drawer & ThemeToggle
+│   │   └── SiteFooter.astro       # Responsive footer
+│   ├── content/blog/              # Project case studies (Markdown)
+│   ├── content.config.ts          # Astro Content Layer schema (glob loader + astro/zod)
+│   ├── data/site.json             # Site metadata & navigation links
+│   ├── layouts/                   # BaseLayout, HomeLayout, PostLayout
+│   ├── lib/images.ts              # Image asset & tag formatting helpers
+│   ├── pages/                     # Routes (/, /projects/, /about/, /posts/<id>/, /404.html, RSS, sitemap, robots)
+│   └── styles/starwind.css        # Tailwind v4 entrypoint & Stone/Pine-Teal theme tokens
+├── astro.config.mjs               # Astro + @tailwindcss/vite config
+├── starwind.config.json           # Starwind CLI config
+├── tsconfig.json                  # TypeScript strict config (@/* -> ./src/*)
+└── wrangler.json                  # Cloudflare Workers static assets config
 ```
 
-### Generic pages
+## Adding or Editing Content
 
-You can create generic pages in markdown format that use a base layout.
+### Projects (`src/content/blog/`)
 
-Sample frontmatter for generic pages.
+Create a Markdown file in `src/content/blog/` with the following frontmatter:
 
-```
+```yaml
 ---
-layout: base
-permalink: /generic-page
-title: Generic page
+title: "Project Title"
+date: "2024-01-01"
+tags: ["small-business", "javascript", "web-development"]
+description: "Brief summary of the project."
+screen: "images/screenshot.png"
+order: 1
 ---
 
-Contents
+Project details in Markdown...
 ```
 
+- Place raster screenshots in both `src/assets/images/` (for responsive WebP optimization) and `public/images/` (for Open Graph metadata). Animated GIFs belong in `public/images/`.
+- Projects are ordered ascending by `order`.
+
+### Site Metadata (`src/data/site.json`)
+
+Edit `src/data/site.json` to update site title, description, navigation links, social/footer links, and default Open Graph image.
+
+### Adding Starwind UI Components
+
+```bash
+npx starwind@latest add <component-name>
+```
 
 ## Deployment
 
-[Netlify](https://netlify.com) is a great way to easily deploy sites. There's no special setup you need to do with Forestry to deploy with Netlify. When Forestry makes commits to your repo, Netlify will auto-trigger a rebuild / deploy when new commits are made.
+Production deployments run automatically via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) on pushes to `main` or `master` (requiring `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` secrets).
 
-- Create a new site in Netlify and import your repository.
+To deploy manually with Wrangler:
 
-- Set the build command to `yarn build`
-
-- Set the publish directory to `public`
-
-## Built with
-
-- Eleventy for site generation (obviously)
-
-- Webpack for asset bundling
-
-- PostCSS for CSS processing
-
-- Autoprefixer for vendor prefixing CSS
-
-- PostCSS Preset Env for transpiling css
-
-- PurgeCSS for unused CSS removal
-
-- CSSNano for CSS minification
+```bash
+npm run deploy
+```
 
 ## License
 
-This project is licensed under the MIT License.
-
-Isn't Jamstack beautiful?
+This project is licensed under the MIT License — see [LICENSE](LICENSE).

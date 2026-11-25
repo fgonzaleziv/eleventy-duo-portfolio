@@ -1,10 +1,33 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import ArrowLeft from "@tabler/icons/outline/arrow-left.svg";
+import { Button } from "@/components/starwind/button";
+import { Card, CardContent, CardDescription, CardHeader } from "@/components/starwind/card";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="Oops! Not Found">
-  <div class="not-found">
-    <h1>404</h1>
-    <p>Oops. Page not Found, <a href="/">Go home</a>.</p>
-  </div>
+  <section class="flex min-h-[55dvh] items-center justify-center py-12 sm:py-20">
+    <Card class="w-full max-w-md text-center shadow-sm">
+      <CardHeader class="items-center gap-2">
+        <p class="font-mono text-6xl font-bold tracking-tight text-primary-accent sm:text-7xl">
+          404
+        </p>
+        <h1 class="text-2xl font-semibold tracking-tight text-card-foreground">Page not found</h1>
+        <CardDescription>
+          Oops. Page not Found — the link you followed may be broken or moved.
+        </CardDescription>
+      </CardHeader>
+
+      <CardContent class="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <Button href="/" variant="primary" size="md">
+          <ArrowLeft class="size-4" aria-hidden="true" />
+          <span>Go home</span>
+        </Button>
+
+        <Button href="/projects/" variant="outline" size="md">
+          <span>View projects</span>
+        </Button>
+      </CardContent>
+    </Card>
+  </section>
 </BaseLayout>
